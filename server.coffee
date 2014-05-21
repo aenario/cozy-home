@@ -16,6 +16,8 @@ application = module.exports = (callback) ->
         host: process.env.HOST or "127.0.0.1"
         root: __dirname
 
+    console.log "WILL ATTEMPT DS ON", process.env.DATASYSTEM_HOST, process.env.DATASYSTEM_PORT
+
     americano.start options, (app, server) ->
         app.server = server
 
