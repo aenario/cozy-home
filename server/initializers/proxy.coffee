@@ -3,7 +3,10 @@ request = require 'request-json'
 Application = require '../models/application'
 ControllerClient = require("cozy-clients").ControllerClient
 
-client = request.newClient 'http://localhost:9104/'
+proxyHost = process.env.PROXY_PORT_9104_TCP_ADDR or 'localhost'
+proxyPort = process.env.PROXY_PORT_9104_TCP_PORT or '9104'
+
+client = request.newClient "http://#{proxyHost}:#{proxyPort}"
 
 getAuthController = ->
     if process.env.NODE_ENV is 'production'
@@ -20,6 +23,8 @@ getAuthController = ->
 
 haibuClient =  new ControllerClient
     token: getAuthController()
+    host: process.env.CONTROLLER_PORT_9002_TCP_ADDR
+    port: process.env.CONTROLLER_PORT_9002_TCP_PORT
 
 
 

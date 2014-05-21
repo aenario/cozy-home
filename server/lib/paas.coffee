@@ -15,9 +15,14 @@ class exports.AppManager
 
     # Setup controller client and proxyClient.
     constructor: ->
-        @proxyClient = new HttpClient "http://localhost:9104/"
+        proxyHost = process.env.PROXY_PORT_9104_TCP_ADDR or 'localhost'
+        proxyPort = process.env.PROXY_PORT_9104_TCP_PORT or '9104'
+
+        @proxyClient = new HttpClient "http://#{proxyHost}:#{proxyPort}"
         @client = new ControllerClient
             token: @getAuthController()
+            host: process.env.CONTROLLER_PORT_9002_TCP_ADDR
+            port: process.env.CONTROLLER_PORT_9002_TCP_PORT
         @memoryManager = new MemoryManager()
 
     # Get token from token file if in production mode.

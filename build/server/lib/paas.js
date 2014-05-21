@@ -20,9 +20,14 @@ exports.AppManager = (function() {
   };
 
   function AppManager() {
-    this.proxyClient = new HttpClient("http://localhost:9104/");
+    var proxyHost, proxyPort;
+    proxyHost = process.env.PROXY_PORT_9104_TCP_ADDR || 'localhost';
+    proxyPort = process.env.PROXY_PORT_9104_TCP_PORT || '9104';
+    this.proxyClient = new HttpClient("http://" + proxyHost + ":" + proxyPort);
     this.client = new ControllerClient({
-      token: this.getAuthController()
+      token: this.getAuthController(),
+      host: process.env.CONTROLLER_PORT_9002_TCP_ADDR,
+      port: process.env.CONTROLLER_PORT_9002_TCP_PORT
     });
     this.memoryManager = new MemoryManager();
   }
