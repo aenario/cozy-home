@@ -264,7 +264,7 @@ module.exports = class HomeView extends BaseView
             contentWindow = frame.prop('contentWindow')
             # Same origin policy may prevent to access location hash
             try
-                currentHash = contentWindow.location.hash.substring 1
+                contentWindow.location.hash = hash
             catch err
                 console.err err
             onLoad()
