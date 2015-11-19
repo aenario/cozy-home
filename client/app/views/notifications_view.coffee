@@ -15,13 +15,17 @@ module.exports = class NotificationsView extends ViewCollection
         "click #clickcatcher": "hideNotifList"
 
     initialize: ->
-        super
         @initializing = true
+        super
+        @initializing = false
 
-    appendView: (view) ->
+    appendView: (view) =>
         @notifList ?= $ '#notifications-list'
         @notifList.prepend view.el
-        @sound.play() unless @initializing
+        unless @initializing
+            @sound?.play()
+            $('.right-menu').show()
+            @clickcatcher.show()
 
     afterRender: =>
         @counter = @$ '#notifications-counter'
