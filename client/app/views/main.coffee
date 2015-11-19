@@ -278,6 +278,7 @@ module.exports = class HomeView extends BaseView
             onLoad()
 
         else
+            frame.prop('contentWindow').location.hash = ''
             onLoad()
 
 
